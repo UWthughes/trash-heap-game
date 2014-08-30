@@ -16,7 +16,9 @@ It contains the following folders:
   are taken from [Cockburn's use cases website][1], which contains many other useful tips
   on writing effective use cases (as does his book).  The use cases are written
   down in [Markdown][2] format.  You may convert them to your word processor of
-  choice.
+  choice.  This folder also includes a sample specification document from a real
+  software company.  That is a good example of what a requirements document for this
+  class should look like.
 
 * **Resources:** This is where you can place files that are useful to your project.
   For example, you may place here helpful articles downloaded from the internet.
