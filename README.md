@@ -1,5 +1,17 @@
-Project Boiler Plate for UWyo COSC 4950/5
+The Trash Heap Game (Working Title)
 =========================================
+**Group Name:** TBD
+
+**Members:**
+
+* Tyler Hughes
+
+* Ryan Morris 
+
+* Bill Matonte
+
+* Eli Meena
+
 
 This is nothing more than a directory structure to use for starting a new project.  
 It contains the following folders:
