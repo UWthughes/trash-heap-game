@@ -1,6 +1,6 @@
 The Trash Heap Game (Working Title)
 =========================================
-**Group Name:** TBD
+**Group Name:** Team Purgamentum
 
 **Members:**
 
@@ -10,7 +10,7 @@ The Trash Heap Game (Working Title)
 
 * Bill Matonte
 
-* Eli Meena
+* Tony DeMillard
 
 
 This is nothing more than a directory structure to use for starting a new project.  
