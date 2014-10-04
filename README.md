@@ -1,4 +1,4 @@
-The Trash Heap Game (Working Title)
+Purgamentum
 =========================================
 **Group Name:** Team Purgamentum
 
