@@ -51,8 +51,7 @@ public class InputHandler : MonoBehaviour
 		
 		myTrans.Translate(moveDirection * moveSpeed * Time.deltaTime * (GamePad.GetTrigger(GamePad.Trigger.LeftTrigger,GamePad.Index.One) + 1f), Space.World);
 		
-		if (v_face.sqrMagnitude > .1)
-			myTrans.eulerAngles = new Vector3(0, Mathf.Atan2(v_face.x, v_face.y) * 57.2957795f, 0);
+        myTrans.eulerAngles = new Vector3(0, Mathf.Atan2(v_face.x, v_face.y) * 57.2957795f, 0);
 		
 		if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.One)) {
 			GetComponent<Renderer>().material.color = Color.green;
