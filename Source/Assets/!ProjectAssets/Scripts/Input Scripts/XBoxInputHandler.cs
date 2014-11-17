@@ -69,5 +69,8 @@ public class XBoxInputHandler : MonoBehaviour
         if (GamePad.GetButton(GamePad.Button.Y, _padNum))
             _cc.Cast('Y');
 
+        if (GamePad.GetAxis(GamePad.Axis.Dpad, _padNum).y > 0f)
+            _cc.LevelUp();
+
 	}
 }

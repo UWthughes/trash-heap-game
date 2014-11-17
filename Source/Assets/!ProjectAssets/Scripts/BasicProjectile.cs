@@ -18,4 +18,15 @@ public class BasicProjectile : MonoBehaviour
     {
         myTrans.Translate(Vector3.forward * speed * Time.deltaTime);
 	}
+
+    void OnCollisionEnter (Collision col)
+    {
+        if (col.gameObject.GetComponent<CharacterController>() != null)
+        {
+            //deal damage
+        }
+        //show particles
+
+        Destroy(gameObject);
+    }
 }

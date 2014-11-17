@@ -4,6 +4,12 @@ using System.Collections;
 public class A_PracticeProjectile : IAbility
 {
     Color c;
+    string _description;
+
+    public string GetDescription()
+    {
+        return _description;
+    }
 
     public void OnActivate(StatBlock caster)
     {
