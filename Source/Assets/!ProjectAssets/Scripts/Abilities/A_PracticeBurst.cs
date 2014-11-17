@@ -5,6 +5,13 @@ public class A_PracticeBurst : IAbility
 {
     Color c;
 
+    string _description;
+
+    public string GetDescription()
+    {
+        return _description;
+    }
+
     public void OnActivate(StatBlock caster)
     {
         for (int i = 0; i < 16; i++)
