@@ -11,6 +11,7 @@ public class GameLauncher : MonoBehaviour
     private bool launching = false;
     private bool keyboardClaimed = false;
     private bool dying = false;
+    private PositionAverager pa;
 
     private void CreateCharacter(int x)
     {
@@ -26,6 +27,8 @@ public class GameLauncher : MonoBehaviour
     void Start()
     {
         playerLabels = new string[4];
+        GameObject cameraTarget = new GameObject("Camera Target");
+        pa = cameraTarget.AddComponent<PositionAverager>();
     }
 
     void OnGUI()
@@ -96,6 +99,7 @@ public class GameLauncher : MonoBehaviour
                 currPlayer++;
                 keyboardClaimed = true;
                 player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
+                pa.AddTarget(player.GetComponent<Transform>());
                 //Destroy(this, 1.0f);
             }
             if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.One))
@@ -107,6 +111,7 @@ public class GameLauncher : MonoBehaviour
                 playerLabels[currPlayer] += "XBox Pad 1";
                 currPlayer++;
                 player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
+                pa.AddTarget(player.GetComponent<Transform>());
                 //Destroy(this, 1.0f);
                 //displaystring = "XBox controller 1 it is.";
             }
@@ -119,6 +124,7 @@ public class GameLauncher : MonoBehaviour
                 playerLabels[currPlayer] += "XBox Pad 2";
                 currPlayer++;
                 player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
+                pa.AddTarget(player.GetComponent<Transform>());
                 //Destroy(this, 1.0f);
                 //displaystring = "XBox controller 2 it is.";
             }
@@ -131,6 +137,7 @@ public class GameLauncher : MonoBehaviour
                 playerLabels[currPlayer] += "XBox Pad 3";
                 currPlayer++;
                 player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
+                pa.AddTarget(player.GetComponent<Transform>());
                 //Destroy(this, 1.0f);
                 //displaystring = "XBox controller 3 it is.";
             }
@@ -143,6 +150,7 @@ public class GameLauncher : MonoBehaviour
                 playerLabels[currPlayer] += "XBox Pad 4";
                 currPlayer++;
                 player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
+                pa.AddTarget(player.GetComponent<Transform>());
                 //Destroy(this, 1.0f);
                 //displaystring = "XBox controller 4 it is.";
             }
@@ -150,6 +158,7 @@ public class GameLauncher : MonoBehaviour
         else if (launching == true && dying == false)
         {
             dying = true;
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>().target = pa.GetComponent<Transform>();
             Destroy(this);
         }
     }
