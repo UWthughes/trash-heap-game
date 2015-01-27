@@ -4,20 +4,20 @@ using System.Collections;
 public class EnemyObject : MonoBehaviour
 {
     public GameObject[] prefabs;
-    public GameObject enemyInstance;
+    public GameObject thisEnemyInstance;
     public GameObject healthBar;
-    public EnemyStats stats;
+    EnemyStats stats;
     private GameObject healthBarInstance;
-    int count;
 
     // Use this for initialization
     void Start()
     {
-        GameObject o = Instantiate(prefabs[Random.Range(0, prefabs.Length)],
-                                           enemyInstance.transform.position,
+        thisEnemyInstance = Instantiate(prefabs[Random.Range(0, prefabs.Length)],
+                                           gameObject.transform.position,
                                            Quaternion.identity) as GameObject;
-        o.transform.parent = enemyInstance.transform;
-
+        thisEnemyInstance.transform.parent = gameObject.transform;
+        stats = thisEnemyInstance.AddComponent("EnemyStats") as EnemyStats;
+ 
         healthBarInstance = Instantiate(healthBar, transform.position, Quaternion.identity) as GameObject;
 
         float hpPercent = (float)(stats.HealthPoints / 100.0);
@@ -30,23 +30,63 @@ public class EnemyObject : MonoBehaviour
             healthBarInstance.guiTexture.color = Color.yellow;
 
         healthBarInstance.transform.localScale = Vector3.zero;
-
-        count = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //create a new enemy if the one is dead
+        if (gameObject == null)
+        {
+            //thisEnemyInstance = Instantiate(prefabs[Random.Range(0, prefabs.Length)],
+            //                       gameObject.transform.position,
+            //                       Quaternion.identity) as GameObject;
+            //thisEnemyInstance.transform.parent = gameObject.transform;
+            //stats = thisEnemyInstance.AddComponent("EnemyStats") as EnemyStats;
 
-        if (stats.Agility < 25)
-            transform.Translate((count > 500) ? Vector3.left * Time.deltaTime : Vector3.right * Time.deltaTime);
-        else if (stats.Agility < 50)
-            transform.Translate((count > 500) ? Vector3.forward * Time.deltaTime : Vector3.back * Time.deltaTime);
-        else if (stats.Agility < 75)
-            transform.Translate((count > 500) ? Vector3.back * Time.deltaTime : Vector3.forward * Time.deltaTime);
-        else
-            transform.Translate((count > 500) ? Vector3.right * Time.deltaTime : Vector3.left * Time.deltaTime);
+            //healthBarInstance = Instantiate(healthBar, transform.position, Quaternion.identity) as GameObject;
 
+            //float hpPercent = (float)(stats.HealthPoints / 100.0);
+            //float hpBarWidth = (hpPercent * 50);
+            //healthBarInstance.guiTexture.pixelInset = new Rect(-25, 25, hpBarWidth, 5);
+
+            //if (stats.HealthPoints < 33)
+            //    healthBarInstance.guiTexture.color = Color.red;
+            //else if (stats.HealthPoints < 66)
+            //    healthBarInstance.guiTexture.color = Color.yellow;
+
+            //healthBarInstance.transform.localScale = Vector3.zero;
+
+            Debug.Log("yay");
+        }
+        //destroy if hp is zero
+        if(stats.HealthPoints == 0)
+        {
+            Destroy(gameObject);
+        }
+
+        GameObject player = GameObject.Find("!Player");
+
+        if (player != null)
+        {
+            transform.LookAt(player.transform.position);
+
+            if (Vector3.Distance(transform.position, player.transform.position) >= 5)
+                transform.position += transform.forward * Time.deltaTime;
+            else if(Time.frameCount % 5 == 0)//slow down fire rate of enemies
+            {
+                //create the projectiles the enemy fires
+                Transform proj = GameObject.CreatePrimitive(PrimitiveType.Sphere).GetComponent<Transform>();
+                proj.position = transform.position + transform.forward;
+                proj.rotation = transform.rotation;
+                proj.Rotate(Vector3.up, (Random.value - .5f) * 7.5f);
+                proj.localScale = new Vector3(.2f, .2f, .2f);
+                proj.gameObject.AddComponent<EnemyBasicProjectile>();
+            }
+            //Debug.Log("yay");
+        }
+
+        //adjust the health bar based on the hp
         if (healthBarInstance != null)
         {
             healthBarInstance.transform.position = Camera.main.WorldToViewportPoint(transform.position);
@@ -62,8 +102,5 @@ public class EnemyObject : MonoBehaviour
                 healthBarInstance.guiTexture.color = Color.green;
         }
 
-        count++;
-        if (count > 1000)
-            count = 0;
     }
 }
