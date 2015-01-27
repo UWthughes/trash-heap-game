@@ -7,9 +7,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class A_Melee : IAbility
+public class A_Melee// : IAbility
 {
-Color c;
+    Color c;
 
     public void OnActivate(StatBlock caster)
     {
