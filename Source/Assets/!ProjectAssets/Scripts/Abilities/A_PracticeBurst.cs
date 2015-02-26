@@ -1,28 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class A_PracticeBurst : IAbility
+public class A_PracticeBurst : Ability
 {
     Color c;
 
-    string _description;
 
-    public string GetDescription()
+    public override void OnActivate()
     {
-        return _description;
-    }
-
-    public void OnActivate(StatBlock caster)
-    {
-        for (int i = 0; i < 16; i++)
+        if (Time.time > readyAt)
         {
-            Transform proj = GameObject.CreatePrimitive(PrimitiveType.Sphere).GetComponent<Transform>();
-            proj.position = caster.CC.transform.position + caster.CC.transform.forward;
-            proj.rotation = caster.CC.transform.rotation;
-            proj.RotateAround(caster.CC.transform.position, new Vector3(0,1,0), (float)i * 22.5f);
-            proj.localScale = new Vector3(.2f, .2f, .2f);
-            proj.gameObject.AddComponent<BasicProjectile>();
-            proj.renderer.material.color = c;
+            for (int i = 0; i < 16; i++)
+            {
+                Transform proj = GameObject.CreatePrimitive(PrimitiveType.Sphere).GetComponent<Transform>();
+                proj.position = owner.CC.transform.position + owner.CC.transform.forward;
+                proj.rotation = owner.CC.transform.rotation;
+                proj.RotateAround(owner.CC.transform.position, new Vector3(0, 1, 0), (float)i * 22.5f);
+                proj.localScale = new Vector3(.4f, .4f, .4f);
+                proj.gameObject.AddComponent<BasicProjectile>();
+                proj.renderer.material.color = c;
+            }
+            readyAt = Time.time + cooldown;
         }
     }
 

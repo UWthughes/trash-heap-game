@@ -6,8 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public int numPlayers;
     public Text text;
+    public bool running = false;
+    
     public static GameManager gm;
     public static Color[] colors = { Color.green, Color.red, Color.blue, Color.yellow };
+
     
 	
     void Awake()
@@ -19,7 +22,6 @@ public class GameManager : MonoBehaviour
 	void Start () 
     {
         DontDestroyOnLoad(this);
-        Instantiate(text);
 	}
 	
 	// Update is called once per frame

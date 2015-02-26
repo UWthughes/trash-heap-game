@@ -12,6 +12,8 @@ public class EnemyObject : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        stats = gameObject.AddComponent<EnemyStats>();
+
         thisEnemyInstance = Instantiate(prefabs[Random.Range(0, prefabs.Length)],
                                            gameObject.transform.position,
                                            Quaternion.identity) as GameObject;

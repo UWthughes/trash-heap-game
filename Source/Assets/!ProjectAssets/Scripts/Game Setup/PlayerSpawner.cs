@@ -26,54 +26,60 @@ public class PlayerSpawner : MonoBehaviour
     {
         if (Input.GetKeyDown("space") && keyboardClaimed == false)
         {
-            CreateCharacter(currPlayer);
-            KeyboardInputManager kim = player.AddComponent<KeyboardInputManager>();
-            kim.CC = player.AddComponent<CharacterController>();
-            keyboardClaimed = true;
-            player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
-            pa.AddTarget(player.GetComponent<Transform>());
-            NextPlayer();
+            SetUpKeyboard();
         }
         if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.One))
         {
-            CreateCharacter(currPlayer);
-            XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
-            xbi.CC = player.AddComponent<CharacterController>();
-            xbi.padNum = GamePad.Index.One;
-            player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
-            pa.AddTarget(player.GetComponent<Transform>());
-            NextPlayer();
+            SetUpGamepad(GamePad.Index.One);
         }
         if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Two))
         {
-            CreateCharacter(currPlayer);
-            XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
-            xbi.CC = player.AddComponent<CharacterController>();
-            xbi.padNum = GamePad.Index.Two;
-            player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
-            pa.AddTarget(player.GetComponent<Transform>());
-            NextPlayer();
+            SetUpGamepad(GamePad.Index.Two);
         }
         if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Three))
         {
-            CreateCharacter(currPlayer);
-            XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
-            xbi.CC = player.AddComponent<CharacterController>();
-            xbi.padNum = GamePad.Index.Three;
-            player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
-            pa.AddTarget(player.GetComponent<Transform>());
-            NextPlayer();
+            SetUpGamepad(GamePad.Index.Three);
         }
         if (GamePad.GetButtonDown(GamePad.Button.A, GamePad.Index.Four))
         {
-            CreateCharacter(currPlayer);
-            XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
-            xbi.CC = player.AddComponent<CharacterController>();
-            xbi.padNum = GamePad.Index.Four;
-            player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
-            pa.AddTarget(player.GetComponent<Transform>());
-            NextPlayer();
+            SetUpGamepad(GamePad.Index.Four);
         }
+    }
+
+    private void SetUpGamepad(GamePad.Index pad)
+    {
+        CreateCharacter(currPlayer);
+        XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
+        xbi.CC = player.AddComponent<CharacterController>();
+        xbi.padNum = pad;
+        player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
+        pa.AddTarget(player.GetComponent<Transform>());
+        float r = Random.Range(0f, 1f);
+        if (r < .33f)
+            xbi.CC.SetRace(new R_Meat());
+        else if (r < .67f)
+            xbi.CC.SetRace(new R_Metal());
+        else
+            xbi.CC.SetRace(new R_Electronic());
+        NextPlayer();
+    }
+
+    private void SetUpKeyboard()
+    {
+        CreateCharacter(currPlayer);
+        KeyboardInputManager kim = player.AddComponent<KeyboardInputManager>();
+        kim.CC = player.AddComponent<CharacterController>();
+        keyboardClaimed = true;
+        player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
+        pa.AddTarget(player.GetComponent<Transform>());
+        float r = Random.Range(0f, 1f);
+        if (r < .33f)
+            kim.CC.SetRace(new R_Meat());
+        else if (r < .67f)
+            kim.CC.SetRace(new R_Metal());
+        else
+            kim.CC.SetRace(new R_Electronic());
+        NextPlayer();
     }
 
     public void SpawnPlayers(int numPlayers)
@@ -87,16 +93,17 @@ public class PlayerSpawner : MonoBehaviour
 
     private void NextPlayer()
     {
-        text.color = GameManager.colors[currPlayer];
-        currPlayer++;
-        if (currPlayer > players)
+        if (currPlayer >= players)
         {
             //Debug.Log("In the destroy block.");
             text.text = "";
+            GameManager.gm.running = true; //more elaborate game launcher goes here.
             Destroy(this);
-            //send some sort of "start game" signal.
             return;
-        }
+        } 
+        text.color = GameManager.colors[currPlayer];
+        currPlayer++;
+
         if (keyboardClaimed)
         {
             text.text = "Player " + currPlayer + "\nPress A for Gamepad Controls.";

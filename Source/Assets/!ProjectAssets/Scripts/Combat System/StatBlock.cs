@@ -77,6 +77,14 @@ public class StatBlock
 
     public StatBlock()
     {
-
+        _strength = 10;
+        _dexterity = 10;
+        _intelligence = 10;
+    }
+    public StatBlock(int s, int d, int i)
+    {
+        _strength = s;
+        _dexterity = d;
+        _intelligence = i;
     }
 }

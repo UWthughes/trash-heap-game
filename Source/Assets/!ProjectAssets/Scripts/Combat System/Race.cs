@@ -4,10 +4,12 @@ using System.Collections;
 public class Race
 {
     //might want to add caps / diminishing returns and check for them when leveling up.
-    private int strPerLevel = 3;
-    private int dexPerLevel = 3;
-    private int intPerLevel = 3;
-    private float movePerLevel = 1f;
+    private int strPerLevel;
+    private int dexPerLevel;
+    private int intPerLevel;
+    private float movePerLevel;
+
+    public Texture tex;
     public void LevelUp (ref StatBlock sb)
     {
         sb.Strength = sb.Strength + strPerLevel;
@@ -18,7 +20,10 @@ public class Race
 
     public Race()
     {
-
+        strPerLevel = 3;
+        dexPerLevel = 3;
+        intPerLevel = 3;
+        movePerLevel = 1f;
     }
 
 }

@@ -1,0 +1,10 @@
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.dll
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\UnityEditor.dll
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\UnityEngine.dll
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\UnityEngine.UI.dll
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\UnityEngine.xml
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\UnityEditor.xml
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\obj\Debug\Assembly-CSharp-firstpass.dll
+E:\Unity Projects\GarbageGame\trash-heap-game\Source\obj\Debug\Assembly-CSharp-firstpass.pdb
