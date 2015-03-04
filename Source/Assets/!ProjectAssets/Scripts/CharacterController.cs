@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class CharacterController : MonoBehaviour 
 {
     private StatBlock stats;
+    private Race race;
     Transform myTrans;
     private Dictionary<char, IAbility> spellbook;
 
@@ -20,6 +21,7 @@ public class CharacterController : MonoBehaviour
         spellbook.Add('R', new A_PracticeProjectile(Color.black));
         spellbook.Add('L', new A_PracticeProjectile(Color.magenta));
         stats = new StatBlock();
+        race = new Race();
         stats.CC = this;
 	}
 	
@@ -45,9 +47,20 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    public void LevelUp()
+    {
+        race.LevelUp(ref stats);
+        Debug.Log("Leveled up.");
+    }
+
 	// Update is called once per frame
 	void Update () 
     {
 	
 	}
+
+    void OnGUI()
+    {
+        GUI.Box(new Rect(10, 10, 200, 80), "Strength: " + stats.Strength + "\nDexterity: " + stats.Dexterity + "\nIntelligence: " + stats.Intelligence + "\nMove Speed: " + stats.moveSpeed);
+    }
 }
