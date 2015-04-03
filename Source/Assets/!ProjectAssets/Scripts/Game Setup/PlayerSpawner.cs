@@ -146,7 +146,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         //spawn character object
         player = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        player.GetComponent<Transform>().position = new Vector3(0f, .77f, 1f);
+        player.GetComponent<Transform>().position = new Vector3(0f, 1.55f, 1f);
         player.GetComponent<Transform>().RotateAround(new Vector3(), new Vector3(0, 1, 0), x * 90f);
         player.name = "Player " + x;
         Transform circle = (Transform)Instantiate(selectCircle, player.transform.position, player.transform.rotation);
