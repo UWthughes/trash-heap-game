@@ -3,12 +3,12 @@ using System.Collections;
 
 public class KeyboardInputManager : MonoBehaviour 
 {
-    private CharacterController _cc;
+    private CharController _cc;
     private Vector2 v_move;
     private Vector2 v_face;
 
 
-    public CharacterController CC
+    public CharController CC
     {
         get
         {

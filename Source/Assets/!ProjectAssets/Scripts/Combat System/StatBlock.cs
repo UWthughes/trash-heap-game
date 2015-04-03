@@ -7,10 +7,15 @@ public class StatBlock
     private int _strength = 10;
     private int _dexterity = 10;
     private int _intelligence = 10;
-    private CharacterController _cc;
+    private int _maxHP;
+    private int _currHP;
+    private CharController _cc;
+
+    public delegate void HealthChangeHandler(int curr, int max);
+    public event HealthChangeHandler OnHealthChange;
 
 
-    #region Parameters
+    #region Properties
     public int Dexterity
     {
         get
@@ -61,7 +66,7 @@ public class StatBlock
         }
     }
 
-    public CharacterController CC
+    public CharController CC
     {
         get
         {
@@ -72,19 +77,75 @@ public class StatBlock
             _cc = value;
         }
     }
+
+    public int MaxHP
+    {
+        get
+        {
+            return _maxHP;
+        }
+        set
+        { }
+    }
+    public int CurrHP
+    {
+        get
+        {
+            return _currHP;
+        }
+        set
+        { }
+    }
     #endregion
 
 
     public StatBlock()
     {
-        _strength = 10;
-        _dexterity = 10;
-        _intelligence = 10;
+        Setup(10,10,10,20f);
     }
-    public StatBlock(int s, int d, int i)
+    public StatBlock(int s, int d, int i, float ms)
+    {
+        Setup(s, d, i, ms);
+    }
+
+    public void Setup(int s, int d, int i, float ms)
     {
         _strength = s;
         _dexterity = d;
         _intelligence = i;
+        _moveSpeed = ms;
+        _maxHP = 200;
+        _currHP = _maxHP;
+    }
+
+    public void TakeDamage(int dmg)
+    {
+        _currHP -= dmg;
+        if (_currHP > _maxHP)
+            _currHP = _maxHP;
+        if (_currHP < 0)
+            _currHP = 0;
+        //notify event / delegate of damage being taken.
+        if (OnHealthChange != null)
+            OnHealthChange(_currHP, _maxHP);
+
+        //death event
+        if (_currHP <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        Debug.Log("Dying.");
+        //This might be tricksy, with our current setup.  
+        //Disable (but don't destroy) the player.
+            //Make invisible
+            //Disable controls
+            //Disable collisions
+            //Keep transform on top of camera target so that camera doesn't go wonky.
+        //Need to check for Game Over
+        //If not game over, prep for respawn
     }
 }

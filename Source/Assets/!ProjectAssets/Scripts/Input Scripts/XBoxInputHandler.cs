@@ -5,7 +5,7 @@ using GamepadInput;
 public class XBoxInputHandler : MonoBehaviour 
 {
     private GamePad.Index _padNum;
-    private CharacterController _cc;
+    private CharController _cc;
     private Vector2 v_move;
     private Vector2 v_face;
 
@@ -21,7 +21,7 @@ public class XBoxInputHandler : MonoBehaviour
         }
     }
 
-    public CharacterController CC
+    public CharController CC
     {
         get
         {
@@ -69,8 +69,8 @@ public class XBoxInputHandler : MonoBehaviour
         if (GamePad.GetButton(GamePad.Button.Y, _padNum))
             _cc.Cast('Y');
 
-        if (GamePad.GetAxis(GamePad.Axis.Dpad, _padNum).y > 0f)
-            _cc.LevelUp();
+        //if (GamePad.GetAxis(GamePad.Axis.Dpad, _padNum).y > 0f)
+            //_cc.LevelUp();
 
 	}
 }
