@@ -95,7 +95,7 @@ public class GameLauncher : MonoBehaviour
                 CreateCharacter(currPlayer);
                 KeyboardInputManager kim = player.AddComponent<KeyboardInputManager>();
                 playerLabels[currPlayer] += "Keyboard";
-                kim.CC = player.AddComponent<CharController>();
+                kim.CC = player.AddComponent<CharacterController>();
                 currPlayer++;
                 keyboardClaimed = true;
                 player.AddComponent<PlayerInfo>().PlayerNumber = (currPlayer);
@@ -106,7 +106,7 @@ public class GameLauncher : MonoBehaviour
             {
                 CreateCharacter(currPlayer);
                 XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
-                xbi.CC = player.AddComponent<CharController>();
+                xbi.CC = player.AddComponent<CharacterController>();
                 xbi.padNum = GamePad.Index.One;
                 playerLabels[currPlayer] += "XBox Pad 1";
                 currPlayer++;
@@ -119,7 +119,7 @@ public class GameLauncher : MonoBehaviour
             {
                 CreateCharacter(currPlayer);
                 XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
-                xbi.CC = player.AddComponent<CharController>();
+                xbi.CC = player.AddComponent<CharacterController>();
                 xbi.padNum = GamePad.Index.Two;
                 playerLabels[currPlayer] += "XBox Pad 2";
                 currPlayer++;
@@ -132,7 +132,7 @@ public class GameLauncher : MonoBehaviour
             {
                 CreateCharacter(currPlayer);
                 XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
-                xbi.CC = player.AddComponent<CharController>();
+                xbi.CC = player.AddComponent<CharacterController>();
                 xbi.padNum = GamePad.Index.Three;
                 playerLabels[currPlayer] += "XBox Pad 3";
                 currPlayer++;
@@ -145,7 +145,7 @@ public class GameLauncher : MonoBehaviour
             {
                 CreateCharacter(currPlayer);
                 XBoxInputHandler xbi = player.AddComponent<XBoxInputHandler>();
-                xbi.CC = player.AddComponent<CharController>();
+                xbi.CC = player.AddComponent<CharacterController>();
                 xbi.padNum = GamePad.Index.Four;
                 playerLabels[currPlayer] += "XBox Pad 4";
                 currPlayer++;

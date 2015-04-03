@@ -19,13 +19,13 @@ public class InputModeSelector : MonoBehaviour
         {
             KeyboardInputManager kim = gameObject.AddComponent<KeyboardInputManager>();
             displaystring = "Keyboard it is.";
-            kim.CC = gameObject.AddComponent<CharController>();
+            kim.CC = gameObject.AddComponent<CharacterController>();
             Destroy(this, 1.0f);
         }
         if (GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.One))
         {
             XBoxInputHandler xbi = gameObject.AddComponent<XBoxInputHandler>();
-            xbi.CC = gameObject.AddComponent<CharController>();
+            xbi.CC = gameObject.AddComponent<CharacterController>();
             xbi.padNum = GamePad.Index.One;
             Destroy(this, 1.0f);
             displaystring = "XBox controller 1 it is.";
@@ -33,7 +33,7 @@ public class InputModeSelector : MonoBehaviour
         if (GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.Two))
         {
             XBoxInputHandler xbi = gameObject.AddComponent<XBoxInputHandler>();
-            xbi.CC = gameObject.AddComponent<CharController>();
+            xbi.CC = gameObject.AddComponent<CharacterController>();
             xbi.padNum = GamePad.Index.Two;
             Destroy(this, 1.0f);
             displaystring = "XBox controller 2 it is.";
@@ -41,7 +41,7 @@ public class InputModeSelector : MonoBehaviour
         if (GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.Three))
         {
             XBoxInputHandler xbi = gameObject.AddComponent<XBoxInputHandler>();
-            xbi.CC = gameObject.AddComponent<CharController>();
+            xbi.CC = gameObject.AddComponent<CharacterController>();
             xbi.padNum = GamePad.Index.Three;
             Destroy(this, 1.0f);
             displaystring = "XBox controller 3 it is.";
@@ -49,7 +49,7 @@ public class InputModeSelector : MonoBehaviour
         if (GamePad.GetButtonDown(GamePad.Button.A,GamePad.Index.Four))
         {
             XBoxInputHandler xbi = gameObject.AddComponent<XBoxInputHandler>();
-            xbi.CC = gameObject.AddComponent<CharController>();
+            xbi.CC = gameObject.AddComponent<CharacterController>();
             xbi.padNum = GamePad.Index.Four;
             Destroy(this, 1.0f);
             displaystring = "XBox controller 4 it is.";

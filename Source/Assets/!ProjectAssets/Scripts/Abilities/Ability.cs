@@ -37,7 +37,7 @@ public class Ability //: MonoBehaviour
 
     }
 
-    public virtual void OnStruck(ref AttackData attack)
+    public virtual void OnStruck()
     {
 
     }

@@ -8,4 +8,3 @@ E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\Unit
 E:\Unity Projects\GarbageGame\trash-heap-game\Source\Temp\UnityVS_bin\Debug\UnityEngine.UI.xml
 E:\Unity Projects\GarbageGame\trash-heap-game\Source\obj\Debug\Assembly-CSharp-firstpass.dll
 E:\Unity Projects\GarbageGame\trash-heap-game\Source\obj\Debug\Assembly-CSharp-firstpass.pdb
-E:\Unity Projects\GarbageGame\trash-heap-game\Source\obj\Debug\UnityVS.Source.CSharp.Plugins.csprojResolveAssemblyReference.cache
