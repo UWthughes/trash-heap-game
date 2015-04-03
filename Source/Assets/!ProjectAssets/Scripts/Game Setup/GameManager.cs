@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviour
         numPlayers = players;
 
         //load the new, empty scene
-        Application.LoadLevel("Junkyard");
+        //Application.LoadLevel("Junkyard");
+        Application.LoadLevel("GeneratedJunkyard");
         
         //build the level
     }
