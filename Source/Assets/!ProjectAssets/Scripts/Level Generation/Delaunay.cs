@@ -235,7 +235,7 @@ public class Delaunay {
 			m_infProtect++;
 			checkEdges(_list);
 		} else {
-			Debug.Log( "m_infProtect ERROR: " + m_infProtect );
+			//Debug.Log( "m_infProtect ERROR: " + m_infProtect );
 		}
 	}
 	
