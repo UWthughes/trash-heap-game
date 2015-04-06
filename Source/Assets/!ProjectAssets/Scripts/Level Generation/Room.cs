@@ -6,6 +6,7 @@ public class Room : MonoBehaviour {
 	
 	private List<GameObject> roomsToConnectTo = new List<GameObject>();
 	private List<GameObject> connectedRooms = new List<GameObject>();
+	private GameObject spawnPoint;
 	
 	private float xSize;
 	private float ySize;
@@ -17,6 +18,7 @@ public class Room : MonoBehaviour {
 		ySize = renderer.bounds.size.y;
 		zSize = renderer.bounds.size.z;
 		addFloor();
+		//AddSpawnPoint();
 	}
 	
 	
@@ -31,7 +33,7 @@ public class Room : MonoBehaviour {
 			
 			aWall.transform.position = new Vector3((int) (transform.position.x -(xSize/2) + (wX/2) + i), transform.position.y + (wY/2) +(ySize/2), transform.position.z + (zSize/2) - (wZ/2));
 			aWall.transform.parent = transform;
-			
+
 			GameObject aWall1 =(GameObject) GameObject.Instantiate(Resources.Load("Wall"));
 			aWall1.transform.position = new Vector3((int) (transform.position.x -(xSize/2) + (wX/2) + i), transform.position.y + (wY/2) +(ySize/2), transform.position.z - (zSize/2) + (wZ/2));
 			aWall1.transform.parent = transform;
@@ -55,6 +57,8 @@ public class Room : MonoBehaviour {
 	
 	private void addFloor(){
 		Destroy(GetComponent<MeshRenderer>());
+		bool addedSpawnPoint = false;
+		Vector3 backup = Vector3.zero;
 		for (int i = 1; i < xSize-1; i++){
 			for (int j = 1; j < zSize-2; j++){
 				GameObject aFloor =(GameObject) GameObject.Instantiate(Resources.Load("TileSets/Ground"));
@@ -64,8 +68,36 @@ public class Room : MonoBehaviour {
 				
 				aFloor.transform.position = new Vector3((transform.position.x -(xSize/2) + (wX/2) + i), transform.position.y + (ySize/2), transform.position.z + (zSize/2) - (wZ/2) - j);
 				aFloor.transform.parent = transform;
+
+				if( backup == Vector3.zero ) {
+					backup = new Vector3(aFloor.transform.position.x, aFloor.transform.position.y, aFloor.transform.position.z);
+				}
+				// add an enemyspawn point
+				if( !addedSpawnPoint ) {
+					int chance = Random.Range(0, 10);
+					if( chance > 7 ) {
+						AddSpawnPoint( aFloor.transform.position );
+						addedSpawnPoint = true;
+					}
+				}
 			}
 		}
+		if( !addedSpawnPoint ) {
+			AddSpawnPoint( backup );
+			addedSpawnPoint = true;
+		}
+	}
+
+	private void AddSpawnPoint() {
+		spawnPoint = (GameObject) GameObject.Instantiate(Resources.Load("EnemyManager"));
+		spawnPoint.transform.position = new Vector3( xSize, ySize, zSize );
+		spawnPoint.transform.parent = transform;
+	}
+
+	private void AddSpawnPoint( Vector3 _position ) {
+		spawnPoint = (GameObject) GameObject.Instantiate(Resources.Load("EnemyManager"));
+		spawnPoint.transform.position = new Vector3( _position.x, _position.y, _position.z);
+		spawnPoint.transform.parent = transform;
 	}
 	
 	// Update is called once per frame

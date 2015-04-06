@@ -23,7 +23,6 @@ public class WorldForge {
 		foreach(VertexNode aNode in _roomList){
 			aNode.getParentCell().AddComponent<Room>();
 			roomList.Add(aNode.getParentCell());
-			
 		}
 		//transfer the connection data into rooms so each room knows who it is connected too
 		foreach(Edge aEdge in mst.getConnections()){
