@@ -149,6 +149,7 @@ public class PlayerSpawner : MonoBehaviour
         player.GetComponent<Transform>().position = new Vector3(0f, 1.55f, 1f);
         player.GetComponent<Transform>().RotateAround(new Vector3(), new Vector3(0, 1, 0), x * 90f);
         player.name = "Player " + x;
+		player.tag = "Player";
         Transform circle = (Transform)Instantiate(selectCircle, player.transform.position, player.transform.rotation);
         circle.SetParent(player.transform);
         circle.renderer.material.color = GameManager.colors[x-1];
