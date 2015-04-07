@@ -13,6 +13,10 @@ public class WorldForge {
 	}
 	
 	public WorldForge(ArrayList cellList, List<VertexNode> _roomList, MSTController mst){
+		// instantiate an EnemyManager to generate spawn points
+		//GameObject enemyManager = (GameObject) GameObject.Instantiate(Resources.Load("EnemyManagerTest"));
+		//enemyManager.tag = "EnemyManager";
+
 		//temp object to parent all cells in 
 		GameObject groupCell = new GameObject();
 		groupCell.name = "AllCells";

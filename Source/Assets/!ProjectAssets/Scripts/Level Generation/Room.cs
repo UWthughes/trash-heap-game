@@ -18,7 +18,6 @@ public class Room : MonoBehaviour {
 		ySize = renderer.bounds.size.y;
 		zSize = renderer.bounds.size.z;
 		addFloor();
-		//AddSpawnPoint();
 	}
 	
 	
@@ -74,8 +73,8 @@ public class Room : MonoBehaviour {
 				}
 				// add an enemyspawn point
 				if( !addedSpawnPoint ) {
-					int chance = Random.Range(0, 10);
-					if( chance > 7 ) {
+					float chance = Random.Range( 0.0f, 1.0f );
+					if( chance > 0.7f ) {
 						AddSpawnPoint( aFloor.transform.position );
 						addedSpawnPoint = true;
 					}
@@ -88,14 +87,9 @@ public class Room : MonoBehaviour {
 		}
 	}
 
-	private void AddSpawnPoint() {
-		spawnPoint = (GameObject) GameObject.Instantiate(Resources.Load("EnemyManager"));
-		spawnPoint.transform.position = new Vector3( xSize, ySize, zSize );
-		spawnPoint.transform.parent = transform;
-	}
-
 	private void AddSpawnPoint( Vector3 _position ) {
-		spawnPoint = (GameObject) GameObject.Instantiate(Resources.Load("EnemyManager"));
+		//spawnPoint = (GameObject) GameObject.Instantiate(Resources.Load("EnemyManager"));
+		spawnPoint = (GameObject) GameObject.Instantiate(Resources.Load("SpawnPoint"));
 		spawnPoint.transform.position = new Vector3( _position.x, _position.y, _position.z);
 		spawnPoint.transform.parent = transform;
 	}
