@@ -144,10 +144,15 @@ public class PlayerSpawner : MonoBehaviour
 
     private void CreateCharacter(int x)
     {
+		// get potential spawn points
+		GameObject[] allEnemySpawnPoints = GameObject.FindGameObjectsWithTag("EnemySpawnPoint");
+		int randLoc = Random.Range(0, allEnemySpawnPoints.Length-1);
+		Vector3 playerPositionVec = allEnemySpawnPoints[randLoc].transform.position;
         //spawn character object
         player = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        player.GetComponent<Transform>().position = new Vector3(0f, 1.55f, 1f);
-        player.GetComponent<Transform>().RotateAround(new Vector3(), new Vector3(0, 1, 0), x * 90f);
+		player.GetComponent<Transform>().position = new Vector3(playerPositionVec.x, 1.55f, playerPositionVec.z);
+        //player.GetComponent<Transform>().position = new Vector3(0f, 1.55f, 1f);
+        //player.GetComponent<Transform>().RotateAround(new Vector3(), new Vector3(0, 1, 0), x * 90f);
         player.name = "Player " + x;
 		player.tag = "Player";
         Transform circle = (Transform)Instantiate(selectCircle, player.transform.position, player.transform.rotation);

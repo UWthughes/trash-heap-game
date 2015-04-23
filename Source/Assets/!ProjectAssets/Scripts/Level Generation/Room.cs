@@ -92,6 +92,7 @@ public class Room : MonoBehaviour {
 		spawnPoint = (GameObject) GameObject.Instantiate(Resources.Load("SpawnPoint"));
 		spawnPoint.transform.position = new Vector3( _position.x, _position.y, _position.z);
 		spawnPoint.transform.parent = transform;
+		spawnPoint.tag = "EnemySpawnPoint";
 	}
 	
 	// Update is called once per frame
