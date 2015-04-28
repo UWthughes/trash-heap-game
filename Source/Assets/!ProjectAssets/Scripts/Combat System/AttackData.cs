@@ -35,8 +35,12 @@ public class AttackData
 
     public AttackData(int bd, StatBlock caster)
     {
-        _baseDamage = bd;
-        _effectiveDamage = bd;
+        _baseDamage = (int)(bd * caster.fStrength);
+        //Calculate crit chance / multiply accordingly
+        if (Random.value < caster.fDexterity)//see if it's a crit
+            _effectiveDamage = (int)(bd * caster.fIntelligence);//multiply accordingly
+        else
+            _effectiveDamage = bd;//or don't
         source = caster;
     }
 }

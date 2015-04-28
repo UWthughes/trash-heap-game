@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Race
+public class Race : StatBlock
 {
     //might want to add caps / diminishing returns and check for them when leveling up.
-    private int strPerLevel;
-    private int dexPerLevel;
-    private int intPerLevel;
-    private float movePerLevel;
+    private int strPerLevel = 3;
+    private int dexPerLevel = 3;
+    private int intPerLevel = 3;
+    private float movePerLevel = 1f;
 
     public Texture tex;
-    public void LevelUp (ref StatBlock sb)
+    public Ability racialAbility;
+    public void LevelUp ()
     {
-        sb.Strength = sb.Strength + strPerLevel;
-        sb.Dexterity = sb.Dexterity + dexPerLevel;
-        sb.Intelligence = sb.Intelligence + intPerLevel;
-        sb.moveSpeed = sb.moveSpeed + movePerLevel;
+        Strength = Strength + strPerLevel;
+        Dexterity = Dexterity + dexPerLevel;
+        Intelligence = Intelligence + intPerLevel;
+        moveSpeed = moveSpeed + movePerLevel;
+    }
+
+    public void RegisterRacialAbility()
+    {
+        if (racialAbility != null)
+            racialAbility.OnEquip(this);
     }
 
     public Race()
     {
-        strPerLevel = 3;
-        dexPerLevel = 3;
-        intPerLevel = 3;
-        movePerLevel = 1f;
     }
 
 }

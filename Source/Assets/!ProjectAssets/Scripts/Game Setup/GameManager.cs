@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
     public static Color[] colors = { Color.green, Color.red, Color.blue, Color.yellow };
 
-    
+    public DamageNumber dmgNum;
+    public Transform sparkProj;
+    public Transform healthPickup;
 	
     void Awake()
     {
@@ -56,5 +58,22 @@ public class GameManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    internal static Race GetRace()
+    {
+        float r = Random.Range(0f, 1f);
+        if (r < .33f)
+            return new R_Meat();
+        else if (r < .67f)
+            return new R_Metal();
+        else
+            return new R_Electronic();
+    }
+
+    internal static Ability GetStartingAbility()
+    {
+        return null;
+        //Customize a basic attack ability with slightly random parameters.
     }
 }

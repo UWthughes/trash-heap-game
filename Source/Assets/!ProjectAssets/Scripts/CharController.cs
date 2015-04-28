@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,10 +14,13 @@ public class CharController : MonoBehaviour
 
     public delegate void TickHandler();
     public event TickHandler OnTick;
-    public delegate void StruckHandler(ref AttackData attack);
+    public delegate void StruckHandler(AttackData attack);
     public event StruckHandler OnStruck;
     public delegate void HealthHandler(int currHealth, int maxHealth);
     public event HealthHandler OnHealthChanged;
+
+    public Text damageText;
+    private Canvas damageCanvas;
 
 	// Use this for initialization
 	public void SetUp () 
@@ -32,27 +36,25 @@ public class CharController : MonoBehaviour
         spellbook.Add('.', new A_B_Dodge());
         spellbook.Add('?', new A_B_Parry());
         //spellbook.Add('Z', new A_PracticePeriodic(Color.cyan));
-        stats = new StatBlock();
-        race = new Race();
-        stats.CC = this;
+        //Get a random starting ability
+        SetRace(GameManager.GetRace());
         foreach (KeyValuePair<char, Ability> kvp in spellbook)
-            kvp.Value.OnEquip(ref stats);
+            kvp.Value.OnEquip(stats);
         StartCoroutine(Ticker());
         cc = GetComponent<CharacterController>();
         if (cc == null)
             cc = gameObject.AddComponent<CharacterController>();
+        cc.stepOffset = 0f;
 	}
 	
-    public void SetStatBlock(StatBlock newStats)
-    {
-        stats = newStats;
-        stats.CC = this;
-    }
 
     public void SetRace (Race newRace)
     {
         race = newRace;
+        stats = race;
+        stats.CC = this;
         renderer.material.mainTexture = race.tex;
+        race.RegisterRacialAbility();
     }
 
     public void MoveAndFace(Vector3 moveDirection, Vector3 faceDirection)
@@ -74,11 +76,19 @@ public class CharController : MonoBehaviour
         }*/
     }
 
-    public void TakeDamage(ref AttackData attack)
+    public void TakeDamage(AttackData attack)
     {
-        OnStruck(ref attack);
+        OnStruck(attack);
         stats.TakeDamage(attack.effectiveDamage);
-        OnHealthChanged(stats.CurrHP, stats.MaxHP);
+        if (OnHealthChanged != null)
+            OnHealthChanged(stats.CurrHP, stats.MaxHP);
+    }
+
+    public void Heal(int amount)
+    {
+        stats.TakeDamage(-amount);
+        if (OnHealthChanged != null)
+            OnHealthChanged(stats.CurrHP, stats.MaxHP);
     }
 
     public void Cast(char slot)
@@ -90,12 +100,6 @@ public class CharController : MonoBehaviour
             spellbook[slot].OnActivate();
             
         }
-    }
-
-    public void ModifyAttack(ref AttackData ad)
-    {
-        //ad.effectiveDamage = ad.baseDamage * (strength)
-        //calculate crit chance / modify accordingly
     }
 
     /*public void LevelUp()
@@ -111,6 +115,31 @@ public class CharController : MonoBehaviour
             if(GameManager.gm.running)
                 OnTick();
             yield return new WaitForSeconds(1f);
+        }
+    }
+
+    [ContextMenu("SpawnDamageNumber")]
+    public void SpawnDamageTest()
+    {
+        SpawnDamageNumber(100);
+    }
+
+
+    internal void SpawnDamageNumber(int dmg)
+    {
+        Vector3 position = Camera.main.WorldToViewportPoint(transform.position);
+        //position.x = position.x + ((Random.value * 10f) - 5f);
+        //DamageNumber dn = Instantiate(GameManager.gm.dmgNum, position, GameManager.gm.transform.rotation) as DamageNumber;//screenspace       
+        DamageNumber dn = Instantiate(GameManager.gm.dmgNum, transform.position, GameManager.gm.dmgNum.transform.rotation) as DamageNumber;//worldspace    
+        if (dmg >= 0)
+        {
+            dn.number = dmg.ToString();
+            dn.color = Color.red;
+        }
+        else
+        {
+            dn.number = (-dmg).ToString();
+            dn.color = Color.green;
         }
     }
 }

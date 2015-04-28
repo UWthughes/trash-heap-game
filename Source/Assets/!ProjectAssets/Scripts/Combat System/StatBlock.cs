@@ -40,6 +40,37 @@ public class StatBlock
                 _intelligence = value;
         }
     }
+    public float fStrength
+    {
+        get
+        {
+            return ((float)_strength) / 100f;
+        }
+        set
+        {
+        }
+    }
+
+    public float fDexterity
+    {
+        get
+        {
+            return ((float)_dexterity) / 100f;
+        }
+        set
+        {
+        }
+    }
+    public float fIntelligence
+    {
+        get
+        {
+            return ((float)_intelligence) / 100f;
+        }
+        set
+        {
+        }
+    }
     public int Strength
     {
         get
@@ -120,6 +151,8 @@ public class StatBlock
 
     public void TakeDamage(int dmg)
     {
+        int startHP = _currHP;
+
         _currHP -= dmg;
         if (_currHP > _maxHP)
             _currHP = _maxHP;
@@ -134,6 +167,10 @@ public class StatBlock
         {
             Die();
         }
+
+        //send up a damage number graphic
+        if (startHP != _currHP)
+            _cc.SpawnDamageNumber(startHP - _currHP);
     }
 
     public void Die()

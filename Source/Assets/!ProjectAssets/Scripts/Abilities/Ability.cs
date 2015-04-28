@@ -37,7 +37,7 @@ public class Ability //: MonoBehaviour
 
     }
 
-    public virtual void OnStruck(ref AttackData attack)
+    public virtual void OnStruck(AttackData attack)
     {
 
     }
@@ -47,7 +47,7 @@ public class Ability //: MonoBehaviour
 
     }
 
-    public virtual void OnEquip(ref StatBlock newOwner)
+    public virtual void OnEquip(StatBlock newOwner)
     {
         //register with the owner to set the OnTick to listen to an event.
         newOwner.CC.OnTick += OnTick;
