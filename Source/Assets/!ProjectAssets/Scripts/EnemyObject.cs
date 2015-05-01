@@ -7,7 +7,7 @@ public class EnemyObject : MonoBehaviour
     public GameObject thisEnemyInstance;
     public GameObject healthBar;
     public EnemyStats stats;
-    private GameObject healthBarInstance;
+    public GameObject healthBarInstance;
     private int previousHp = 0;
     public int enemyType;
     private Vector3 startPos;
@@ -17,25 +17,25 @@ public class EnemyObject : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        CharacterController controller = GetComponent<CharacterController>();
-        Component[] colliders = controller.GetComponents(typeof(Collider));
+        //CharacterController controller = GetComponent<CharacterController>();
+        //Component[] colliders = controller.GetComponents(typeof(Collider));
 
-        foreach (Collider collider in colliders)
-        {
-            foreach (Collider existingCollider in existingCCColliders)
-            {
-                Physics.IgnoreCollision(collider, existingCollider);
-            }
-        }
+        //foreach (Collider collider in colliders)
+        //{
+        //    foreach (Collider existingCollider in existingCCColliders)
+        //    {
+        //        Physics.IgnoreCollision(collider, existingCollider);
+        //    }
+        //}
 
-        thisEnemyInstance = Instantiate(prefabs[enemyType], gameObject.transform.position, Quaternion.identity) as GameObject;
+        thisEnemyInstance = Instantiate(prefabs[Random.Range(0, 47)], gameObject.transform.position, Quaternion.identity) as GameObject;
         thisEnemyInstance.transform.parent = gameObject.transform;
         startPos = gameObject.transform.position;
         stats = thisEnemyInstance.AddComponent("EnemyStats") as EnemyStats;
         stats.HealthPoints = 100;
         stats.InitialHealthPoints = 100;
- 
-        healthBarInstance = Instantiate(healthBar, transform.position, Quaternion.identity) as GameObject;
+
+        healthBarInstance = Instantiate(healthBar, transform.position += ((enemyType == 1) ? new Vector3(0F, 0F) : new Vector3(0.0F, 0.0F)), Quaternion.identity) as GameObject;
 
         float hpPercent = (float)(stats.HealthPoints / 100.0);//stats.InitialHealthPoints);
         float hpBarWidth = (hpPercent * 50);
@@ -44,33 +44,48 @@ public class EnemyObject : MonoBehaviour
         healthBarInstance.transform.localScale = Vector3.zero;
 
         gameObject.tag = "Enemy";
+
+        //for advanced models
+        //if (enemyType == 3)
+        //    transform.localScale -= new Vector3(.997F, .997F, .997F);
+        //if (enemyType == 1)
+        //    transform.localScale += new Vector3(6.0F, 6.0F, 6.0F);
+        //else if(enemyType == 2)
+        //    transform.localScale += new Vector3(.5F, .5F, .5F);
+        //else if(enemyType == 0)
+        //    transform.localScale -= new Vector3(.2F, .2F, .2F);
+
+        enemyType = Random.Range(0, 2);
     }
 
     // Update is called once per frame
     void Update()
     {
         //destroy if hp is zero
-        if (stats.HealthPoints == 0)
-        {
-            Destroy(thisEnemyInstance);
+        if(stats != null)
+        { 
+            if (stats.HealthPoints == 0)
+            {
+                Destroy(thisEnemyInstance);
+            }
         }
 
         //timer respawn
-        if (Time.frameCount % 400 == 0 && count < 50)
-        {
-            GameObject newEnemyInstance = (GameObject)Instantiate(this, startPos, Quaternion.identity);
+        //if (Time.frameCount % 400 == 0 && count < 50)
+        //{
+        //    GameObject newEnemyInstance = (GameObject)Instantiate(this, startPos, Quaternion.identity);
 
-            //thisEnemyInstance = Instantiate(prefabs[enemyType],
-            //                       gameObject.transform.position,
-            //                       Quaternion.identity) as GameObject;
-            newEnemyInstance.transform.parent = gameObject.transform;
-            stats = newEnemyInstance.AddComponent("EnemyStats") as EnemyStats;
-            newEnemyInstance.AddComponent("BoxCollider");
-            stats.HealthPoints = 100 + count;
-            stats.InitialHealthPoints = 100 + count;
-            count += 5;
+        //    //thisEnemyInstance = Instantiate(prefabs[enemyType],
+        //    //                       gameObject.transform.position,
+        //    //                       Quaternion.identity) as GameObject;
+        //    newEnemyInstance.transform.parent = gameObject.transform;
+        //    stats = newEnemyInstance.AddComponent("EnemyStats") as EnemyStats;
+        //    newEnemyInstance.AddComponent("BoxCollider");
+        //    stats.HealthPoints = 100 + count;
+        //    stats.InitialHealthPoints = 100 + count;
+        //    count += 5;
 
-        }
+        //}
 
         GameObject player = GameObject.Find("Capsule");
 
@@ -92,7 +107,8 @@ public class EnemyObject : MonoBehaviour
                     healthBarInstance.guiTexture.color = Color.green;
             }
 
-            transform.LookAt(player.transform.position);
+            //if (Vector3.Distance(transform.position, player.transform.position) > 2)
+                transform.LookAt(player.transform.position);
 
             UnityEngine.CharacterController controller = GetComponent<UnityEngine.CharacterController>();
 
@@ -103,8 +119,8 @@ public class EnemyObject : MonoBehaviour
                     //standard mob - dodges left or right randomly
                     if (Vector3.Distance(transform.position, player.transform.position) >= 5 && controller != null)
                     {
-                        controller.SimpleMove((transform.forward * 10.0F) * Time.deltaTime);//pursue player
-                        //transform.position += (transform.forward * 10.0F) * Time.deltaTime;//pursue player
+                        //controller.SimpleMove((transform.forward * 10.0F) * Time.deltaTime);//pursue player
+                        transform.position += (transform.forward * 10.0F) * Time.deltaTime;//pursue player
                     }
                     else if (Time.frameCount % 5 == 0)//slow down fire rate of enemies
                     {
@@ -121,7 +137,7 @@ public class EnemyObject : MonoBehaviour
                         var random = Random.value;
                         //move - you are getting shot
                         transform.position += (random > 0.5 ? transform.right * -200.0F : transform.right * 200.0F) * Time.deltaTime;
-                        Debug.Log(random.ToString());
+                        //Debug.Log(random.ToString());
 
                     }
                     break;
@@ -129,8 +145,8 @@ public class EnemyObject : MonoBehaviour
                     //standard mob - pursues player and fires when within range
                     if (Vector3.Distance(transform.position, player.transform.position) >= 15 && controller != null)
                     {
-                        controller.SimpleMove(transform.forward * 10.0F * Time.deltaTime);//pursue player
-                        //transform.position += transform.forward * Time.deltaTime;//pursue player
+                        //controller.SimpleMove(transform.forward * 10.0F * Time.deltaTime);//pursue player
+                        transform.position += transform.forward * Time.deltaTime;//pursue player
                     }
                     else if (Time.frameCount % 15 == 0)//slow down fire rate of enemies
                     {
@@ -147,8 +163,8 @@ public class EnemyObject : MonoBehaviour
                     //standard mob - teleports around player when shot
                     if (Vector3.Distance(transform.position, player.transform.position) >= 5 && controller != null)
                     {
-                        controller.SimpleMove((transform.forward * 10.5F) * Time.deltaTime);//pursue player
-                        //transform.position += (transform.forward * 10.5F) * Time.deltaTime;//pursue player
+                        //controller.SimpleMove((transform.forward * 10.5F) * Time.deltaTime);//pursue player
+                        transform.position += (transform.forward * 10.5F) * Time.deltaTime;//pursue player
                     }
                     else if (Time.frameCount % 35 == 0)//slow down fire rate of enemies
                     {
@@ -196,8 +212,8 @@ public class EnemyObject : MonoBehaviour
         //}
 
 
-
-        previousHp = stats.HealthPoints;
+        if(stats != null)
+            previousHp = stats.HealthPoints;
 
         //proximity respawn
         //if (Vector3.Distance(startPos, player.transform.position) >= 1)
