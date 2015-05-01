@@ -169,7 +169,7 @@ public class StatBlock
         }
 
         //send up a damage number graphic
-        if (startHP != _currHP)
+        //if (startHP != _currHP)
             _cc.SpawnDamageNumber(startHP - _currHP);
     }
 
