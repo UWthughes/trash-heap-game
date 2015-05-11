@@ -7,10 +7,12 @@ public class EnemyStats : MonoBehaviour {
     public int Strength;
     public int Intellect;
     public int Agility;
+    public int InitialHealthPoints;
 
 	// Use this for initialization
 	void Start () {
-        HealthPoints = 100;
+        if(HealthPoints == null)
+            HealthPoints = 100;
         AttackPower = Random.Range(0, 100);
         Strength = Random.Range(0, 100);
         Intellect = Random.Range(0, 100);
@@ -22,8 +24,8 @@ public class EnemyStats : MonoBehaviour {
 	void Update () {
         if (HealthPoints < 0)
             HealthPoints = 0;
-        else if (HealthPoints > 100)
-            HealthPoints = 100;
+        //else if (HealthPoints > 100)
+        //    HealthPoints = 100;
 	}
 
     public void DealDamage(int attackPower)
